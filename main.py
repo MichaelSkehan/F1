@@ -96,7 +96,7 @@ def points_cumulative(year):
             driver_abbr = driver_data.name[0]
 
             ax.plot(rounds, points, label=driver_abbr)
-            ax.set_title(team, fontsize=14)
+            ax.set_title(team, fontsize=12)
             ax.set_xlabel('Round')
             ax.set_ylabel('Cumulative Points')
 
