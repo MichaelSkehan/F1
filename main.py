@@ -62,6 +62,56 @@ def points_cumulative(year):
     results = pd.concat(results)
     results = results.pivot(index='Abbreviation', columns='Round', values='Points')
 
+    points_columns = results.columns
+
+    for round_idx in range(1, len(points_columns)):
+        # Calculate cumulative sum for each round
+        results[points_columns[round_idx]] += results[points_columns[round_idx - 1]]
+
+    # Get unique team names
+    unique_teams = results.index.get_level_values('TeamName').unique()
+
+    # Define the number of rows and columns for subplots
+    num_teams = len(unique_teams)
+    num_cols = 2  
+    num_rows = 5
+
+    # Create subplots
+    fig, axes = plt.subplots(num_rows, num_cols, figsize=(12, 12))
+
+    # Flatten axes if necessary
+    if num_teams > 1:
+      axes = axes.flatten()
+    else:
+        axes = [axes]
+
+    # Plot cumulative sum for each team
+    for i, team in enumerate(unique_teams):
+        team_data = results.loc[results.index.get_level_values('TeamName') == team]
+        for j in range(len(team_data)):
+            ax = axes[i]
+            driver_data = team_data.iloc[j]
+            rounds = driver_data.index.astype(int)  # Convert rounds to integers
+            points = driver_data.values  # Exclude the first value which is the driver name
+            driver_abbr = driver_data.name[0]
+
+        ax.plot(rounds, points, label=driver_abbr)
+        ax.set_title(team)
+        ax.set_xlabel('Round')
+        ax.set_ylabel('Cumulative Points')
+
+        ax.set_ylim(0, 100)  # Set your desired limits here
+        ax.legend()
+
+    # Hide extra subplots if needed
+    if num_teams < len(axes):
+        for ax in axes[num_teams:]:
+            ax.axis('off')
+
+    # Adjust layout and display plot
+    plt.tight_layout()
+    plt.show()
+
     return results
 
 points_cumulative(2023)
