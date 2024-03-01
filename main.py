@@ -9,7 +9,7 @@ fastf1.plotting.setup_mpl(misc_mpl_mods=False)
 
 def racepace_practice_compare(date, track, sessn, drivers, start,end):
     session = fastf1.get_session(date, track, sessn)
-    session.load()
+    session.load(telemetry=False, laps=False, weather=False)
     
     driver_laps = session.laps.pick_drivers(drivers).pick_laps(range(start,end,1)).reset_index()
     print(driver_laps['LapTime'])
@@ -53,14 +53,14 @@ def points_cumulative(year):
     rounds = schedule['RoundNumber']
     for round in rounds:
         session = fastf1.get_session(year,round,'R')
-        session.load()
+        session.load(telemetry=False, laps=False, weather=False)
 
         temp = session.results[['Abbreviation','TeamName', 'Points']].copy()
         temp.loc[:, 'Round'] = round  
         results.append(temp)
 
     results = pd.concat(results)
-    results = results.pivot(index='Abbreviation', columns='Round', values='Points')
+    results = results.pivot(index=['Abbreviation','TeamName'], columns='Round', values='Points')
 
     points_columns = results.columns
 
@@ -77,7 +77,7 @@ def points_cumulative(year):
     num_rows = 5
 
     # Create subplots
-    fig, axes = plt.subplots(num_rows, num_cols, figsize=(12, 12))
+    fig, axes = plt.subplots(num_rows, num_cols, figsize=(8, 12))
 
     # Flatten axes if necessary
     if num_teams > 1:
@@ -95,13 +95,13 @@ def points_cumulative(year):
             points = driver_data.values  # Exclude the first value which is the driver name
             driver_abbr = driver_data.name[0]
 
-        ax.plot(rounds, points, label=driver_abbr)
-        ax.set_title(team)
-        ax.set_xlabel('Round')
-        ax.set_ylabel('Cumulative Points')
+            ax.plot(rounds, points, label=driver_abbr)
+            ax.set_title(team, fontsize=14)
+            ax.set_xlabel('Round')
+            ax.set_ylabel('Cumulative Points')
 
-        ax.set_ylim(0, 100)  # Set your desired limits here
-        ax.legend()
+            ax.set_ylim(0, 800)  # Set your desired limits here
+            ax.legend()
 
     # Hide extra subplots if needed
     if num_teams < len(axes):
@@ -110,8 +110,7 @@ def points_cumulative(year):
 
     # Adjust layout and display plot
     plt.tight_layout()
-    plt.show()
 
-    return results
+    return plt.show()
 
 points_cumulative(2023)
