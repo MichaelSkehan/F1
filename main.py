@@ -1,11 +1,8 @@
 import fastf1
-import rapidfuzz
 import seaborn as sns
 from matplotlib import pyplot as plt
 import fastf1.plotting
-import timple
 import timple.timedelta as tmpldelta
-import datetime
 
 fastf1.plotting.setup_mpl(misc_mpl_mods=False)
 
