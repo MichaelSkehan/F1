@@ -3,6 +3,7 @@ import seaborn as sns
 from matplotlib import pyplot as plt
 import fastf1.plotting
 import timple.timedelta as tmpldelta
+import pandas as pd
 
 fastf1.plotting.setup_mpl(misc_mpl_mods=False)
 
@@ -43,4 +44,24 @@ def racepace_practice_compare(date, track, sessn, drivers, start,end):
 
     return plt.show()
 
-racepace_practice_compare(2024,'Bahrain','FP2',['VER','HAM','PER'],10,22)
+#racepace_practice_compare(2024,'Bahrain','FP2',['VER','HAM','PER'],10,22)
+
+def points_cumulative(year):
+    results = []
+    schedule = fastf1.get_event_schedule(year)
+    schedule = schedule.iloc[1:]
+    rounds = schedule['RoundNumber']
+    for round in rounds:
+        session = fastf1.get_session(year,round,'R')
+        session.load()
+
+        temp = session.results[['Abbreviation','TeamName', 'Points']].copy()
+        temp.loc[:, 'Round'] = round  
+        results.append(temp)
+
+    results = pd.concat(results)
+    results = results.pivot(index='Abbreviation', columns='Round', values='Points')
+
+    return results
+
+points_cumulative(2023)
