@@ -18,8 +18,8 @@ def main():
     session = load_session(2024, 'Monaco', 'R',True)
 
     # Plot race pace
-    get_driver_laps(session,['VER', 'LEC'],2,80)
-    racepace_plot(session, ['VER','LEC'], 2, 80)
+
+    racepace_plot(session, ['VER'], 2, 80)
 
     #points_results = get_cumulative_points(2023)
     #unique_teams = points_results.index.get_level_values('TeamName').unique()

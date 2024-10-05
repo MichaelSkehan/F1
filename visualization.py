@@ -1,6 +1,7 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
 import timple.timedelta as tmpldelta
+from data_processing import get_driver_laps
 
 
 def racepace_plot(session, drivers, start, end):
@@ -18,14 +19,15 @@ def racepace_plot(session, drivers, start, end):
         None: Displays a scatter plot of lap times for the specified drivers.
     """
 
-    driver_laps = session.laps.pick_drivers(drivers).pick_laps(range(start, end, 1)).reset_index()
+    driver_laps = get_driver_laps(session, drivers, start, end)
+    #driver_laps = session.laps.pick_drivers(drivers).pick_laps(range(start, end, 1)).reset_index()
     print(driver_laps['LapTime'])
 
     fig, ax = plt.subplots(figsize=(8, 8))
     sns.lineplot(data=driver_laps, x="LapNumber", y="LapTime", ax=ax, hue="Driver", legend='auto')
 
 
-    subtitle = "Race Pace Comparison: " + " / ".join(drivers)
+    subtitle = "Race Pace: " + " / ".join(drivers)
     ax.set_xlabel("Lap Number")
     ax.set_ylabel("Lap Time")
     formatter = tmpldelta.TimedeltaFormatter("%m:%s:%ms")

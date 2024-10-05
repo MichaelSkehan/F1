@@ -35,7 +35,6 @@ def get_driver_laps(session, drivers, start, end):
             pandas.DataFrame: A DataFrame containing lap times for the specified drivers.
         """
     driver_laps = session.laps.pick_drivers(drivers).pick_laps(range(start, end, 1)).reset_index()
-    print(driver_laps[['LapNumber', 'LapTime']])
 
     return driver_laps
 
