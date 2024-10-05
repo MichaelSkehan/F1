@@ -15,12 +15,14 @@ def main():
     fastf1.plotting.setup_mpl(misc_mpl_mods=False)
 
     # Example usage of functions
-    session = load_session(2024, 'Bahrain', 'FP2',True)
-    racepace_practice_compare(session, ['VER', 'HAM', 'PER'], 10, 22)
+    session = load_session(2024, 'Monaco', 'R',True)
+    #racepace_practice_compare(session, ['VER', 'HAM', 'PER'], 10, 22)
 
-    points_results = get_cumulative_points(2023)
-    unique_teams = points_results.index.get_level_values('TeamName').unique()
-    plot_cumulative_points(points_results, unique_teams)
+    print(get_driver_laps(session,['VER'],0,80))
+
+    #points_results = get_cumulative_points(2023)
+    #unique_teams = points_results.index.get_level_values('TeamName').unique()
+    #plot_cumulative_points(points_results, unique_teams)
 
 
 if __name__ == "__main__":

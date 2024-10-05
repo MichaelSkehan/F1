@@ -26,9 +26,7 @@ def get_driver_laps(session, drivers, start, end):
         Get lap data for specified drivers within a session.
 
         Args:
-            year (int): The year of the race.
-            round (int): The round number of the race.
-            session_type (str): The type of session (e.g., 'FP1', 'R').
+            session (fastf1.core.Session): The loaded session object containing lap data.
             drivers (list): A list of driver abbreviations to filter.
             start (int): The starting lap number.
             end (int): The ending lap number.
@@ -36,6 +34,7 @@ def get_driver_laps(session, drivers, start, end):
         Returns:
             pandas.DataFrame: A DataFrame containing lap times for the specified drivers.
         """
+
 
     return session.laps.pick_drivers(drivers).pick_laps(range(start, end, 1)).reset_index()
 
