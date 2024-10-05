@@ -34,9 +34,10 @@ def get_driver_laps(session, drivers, start, end):
         Returns:
             pandas.DataFrame: A DataFrame containing lap times for the specified drivers.
         """
+    driver_laps = session.laps.pick_drivers(drivers).pick_laps(range(start, end, 1)).reset_index()
+    print(driver_laps[['LapNumber', 'LapTime']])
 
-
-    return session.laps.pick_drivers(drivers).pick_laps(range(start, end, 1)).reset_index()
+    return driver_laps
 
 
 def get_cumulative_points(year):

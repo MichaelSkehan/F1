@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import timple.timedelta as tmpldelta
 
 
-def racepace_practice_compare(session, drivers, start, end):
+def racepace_plot(session, drivers, start, end):
 
     """
     Compare the lap times of specified drivers in a session and plot their lap times.
@@ -24,12 +24,14 @@ def racepace_practice_compare(session, drivers, start, end):
     fig, ax = plt.subplots(figsize=(8, 8))
     sns.lineplot(data=driver_laps, x="LapNumber", y="LapTime", ax=ax, hue="Driver", legend='auto')
 
+
+    subtitle = "Race Pace Comparison: " + " / ".join(drivers)
     ax.set_xlabel("Lap Number")
     ax.set_ylabel("Lap Time")
     formatter = tmpldelta.TimedeltaFormatter("%m:%s:%ms")
     ax.yaxis.set_major_formatter(formatter)
     ax.invert_yaxis()
-    plt.suptitle("VER V HAM long run laptimes Bahrain FP2 2024")
+    plt.suptitle(subtitle)
     plt.grid(color='w', which='major', axis='both')
     sns.despine(left=True, bottom=True)
     plt.tight_layout()
