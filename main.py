@@ -4,12 +4,18 @@ import fastf1.plotting  # Import the plotting module
 
 
 def main():
+
+    """
+    Main function to execute the analysis of F1 race data.
+
+    Loads session data, retrieves driver lap times, and plots race pace comparison and cumulative points.
+    """
+
     # Setup Matplotlib settings
     fastf1.plotting.setup_mpl(misc_mpl_mods=False)
 
     # Example usage of functions
-    session = load_session(2024, 'Bahrain', 'FP2')
-    driver_laps = get_driver_laps(session, ['VER', 'HAM', 'PER'], 10, 22)
+    session = load_session(2024, 'Bahrain', 'FP2',True)
     racepace_practice_compare(session, ['VER', 'HAM', 'PER'], 10, 22)
 
     points_results = get_cumulative_points(2023)
