@@ -19,7 +19,7 @@ def main():
 
     # Plot race pace
 
-    racepace_plot(session, ['VER'], 2, 80)
+    racepace_plot(session, ['VER','LEC'], 2, 80)
 
     #points_results = get_cumulative_points(2023)
     #unique_teams = points_results.index.get_level_values('TeamName').unique()
