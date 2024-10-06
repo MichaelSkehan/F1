@@ -54,10 +54,11 @@ def get_cumulative_points(year):
     results = []
     schedule = fastf1.get_event_schedule(year).iloc[1:]  # Skip the first row
     rounds = schedule['RoundNumber']
+
     for round in rounds:
         session = load_session(year, round, 'R',lap_data=False)
         temp = session.results[['Abbreviation', 'TeamName', 'Points']].copy()
-        temp.loc[:, 'Round'] = round
+        temp.loc[:, 'Round'] = round #
         results.append(temp)
 
     results = pd.concat(results).pivot(index=['Abbreviation', 'TeamName'], columns='Round', values='Points')

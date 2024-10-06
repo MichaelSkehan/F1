@@ -15,11 +15,11 @@ def main():
     fastf1.plotting.setup_mpl(misc_mpl_mods=False)
 
     # Load in the session
-    session = load_session(2024, 'Monaco', 'R',True)
+    session = load_session(2024, 'Azerbaijan', 'R',True)
 
     # Plot race pace
 
-    racepace_plot(session, ['VER','LEC'], 2, 80)
+    racepace_plot(session, ['LEC','PIA'], 1, 80)
 
     #points_results = get_cumulative_points(2023)
     #unique_teams = points_results.index.get_level_values('TeamName').unique()
