@@ -68,3 +68,10 @@ def get_cumulative_points(year):
         results[points_columns[round_idx]] += results[points_columns[round_idx - 1]]
 
     return results
+
+def get_position_changes(session, drivers):
+    for drv in drivers:
+        drv_laps = session.laps.pick_driver(drv)
+        drv_laps['PositionChange'] = drv_laps['Position'].diff()
+        print(drv_laps)
+    return drv_laps
